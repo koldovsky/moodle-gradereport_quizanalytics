@@ -31,6 +31,7 @@ $questionid  = required_param('quesid', PARAM_INT);
 
 $PAGE->set_url($url);
 $PAGE->set_context(context_system::instance());
+
 require_login();
 
 $output = $PAGE->get_renderer('mod_quiz');
@@ -39,8 +40,8 @@ $quiz = $DB->get_record('quiz', array('id' => $quizid));
 
 $attempt = $DB->get_record_sql("SELECT quizatt.id, quizatt.uniqueid
             FROM {quiz_attempts} quizatt WHERE quizatt.state = 'finished'
-            AND quizatt.sumgrades IS NOT NULL AND quizatt.quiz = ".$quiz->id." AND
-            quizatt.userid = ".$USER->id." ORDER BY quizatt.id DESC LIMIT 1");
+            AND quizatt.sumgrades IS NOT NULL AND quizatt.quiz = ? AND
+            quizatt.userid = ? ORDER BY quizatt.id DESC LIMIT 1", array($quiz->id, $USER->id));
 
 $displayoptions = mod_quiz_display_options::make_from_quiz($quiz,
             mod_quiz_display_options::AFTER_CLOSE);

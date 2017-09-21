@@ -28,6 +28,8 @@ global $CFG;
 $source  = required_param('source', PARAM_RAW);
 $userid  = required_param('userid', PARAM_INT);
 
+require_login();
+
 if (!empty($source) && !empty($userid)) {
     $imagedata = $source;
     $userid = $userid;

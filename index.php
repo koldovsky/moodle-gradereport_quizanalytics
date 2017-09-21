@@ -143,7 +143,8 @@ if (!$getquiz) {
 
     foreach ($getquiz as $getquizkey => $getquizval) {
         $getquizattemptsnotgraded = $DB->get_records_sql("SELECT * FROM {quiz_attempts}
-        WHERE state = 'finished' AND sumgrades IS NULL AND quiz=".$getquizval->id." AND userid =".$USER->id);
+        WHERE state = 'finished' AND sumgrades IS NULL AND quiz= ? AND userid = ?", array($getquizval->id, $USER->id));
+
         $getquizattempts = $DB->get_records('quiz_attempts', array('quiz' => $getquizval->id,
         'userid' => $USER->id, 'state' => 'finished'));
 
