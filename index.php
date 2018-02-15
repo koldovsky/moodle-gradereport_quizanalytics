@@ -116,6 +116,10 @@ print_grade_page_head($courseid, 'report', 'quizanalytics',
     get_string('pluginname', 'gradereport_quizanalytics'). ' - '.$USER->firstname
     .' '.$USER->lastname);
 
+$qanalyticsformatoptions = new stdClass();
+$qanalyticsformatoptions->noclean = true;
+$qanalyticsformatoptions->overflowdiv = false;
+
 $getquiz = array();
 $getquizrec = array();
 $quizcount = 0;
@@ -140,13 +144,22 @@ if (!$getquiz) {
 
     foreach ($getquiz as $getquizkey => $getquizval) {
         $getquizattemptsnotgraded = $DB->get_records_sql("SELECT * FROM {quiz_attempts}
-        WHERE state = 'finished' AND sumgrades IS NULL AND quiz= ? AND userid = ?", array($getquizval->id, $USER->id));
+        WHERE state = 'finished' AND sumgrades IS NULL AND quiz = ? AND userid = ?", array($getquizval->id, $USER->id));
 
         $getquizattempts = $DB->get_records('quiz_attempts', array('quiz' => $getquizval->id,
-        'userid' => $USER->id, 'state' => 'finished'));
+            'userid' => $USER->id, 'state' => 'finished'));
+
+        $getmoduleid = $DB->get_record_sql("SELECT cm.id FROM {course_modules} cm,
+            {modules} m, {quiz} q WHERE m.name = 'quiz' AND cm.module = m.id
+            AND cm.course = q.course AND cm.instance = q.id AND q.id = ?", array($getquizval->id));
+        if (isset($getmoduleid)) {
+            $quizviewurl = $CFG->wwwroot."/mod/quiz/view.php?id=".$getmoduleid->id;
+        } else {
+            $quizviewurl = "#";
+        }
 
         $row = array ();
-        $row[] = $getquizval->name;
+        $row[] = "<a href='".$quizviewurl."'>".format_text($getquizval->name, "", $qanalyticsformatoptions)."</a>";
         $row[] = count($getquizattempts);
         if (count($getquizattemptsnotgraded) == count($getquizattempts)) {
             $row[] = get_string('notgraded', 'gradereport_quizanalytics');
@@ -162,7 +175,7 @@ if (!$getquiz) {
 }
 
 if (!empty($table)) {
-    echo html_writer::start_tag('div', array('class' => 'no-overflow'));
+    echo html_writer::start_tag('div', array('class' => 'no-overflow display-table'));
     echo html_writer::table($table);
     echo html_writer::end_tag('div');
     echo $OUTPUT->paging_bar($quizcount, $page, $perpage, $baseurl);
