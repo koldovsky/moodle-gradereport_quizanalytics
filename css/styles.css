@@ -1,19 +1,6 @@
-.display-table {
-	width:100%;
-	margin-top:20px;
-}
-.display-table th, .display-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
-  font-size: 13px;
-}
-.display-table tr th {
-  background: #999;
-  color: #fff;
-}
-.display-table tr:nth-child(odd) td {
-  background: #f6f6f6;
+#page-grade-report-quizanalytics-index .display-table a:hover,
+#page-grade-report-quizanalytics-index .display-table a:focus {
+  text-decoration: none;
 }
 .showanalytics {
   margin-top:20px;
