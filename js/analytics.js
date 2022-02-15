@@ -377,7 +377,7 @@ $(document).ready(function() {
 							callbacks: {
 								// use label callback to return the desired label
 								label: function(tooltipItem, data) {
-									var newtooltipq = [data.datasets[tooltipItem.datasetIndex].label +" : "+ tooltipItem.yLabel, "(Click to Review Question)"];					
+									var newtooltipq = [data.datasets[tooltipItem.datasetIndex].label +" : "+ tooltipItem.yLabel];					
 									return newtooltipq;
 								}
 							}
@@ -402,7 +402,7 @@ $(document).ready(function() {
 							callbacks: {
 								// use label callback to return the desired label
 								label: function(tooltipItem, data) {
-									var newtooltip = [data.datasets[tooltipItem.datasetIndex].label + " : " + tooltipItem.yLabel, "(Click to Review Question)"];
+									var newtooltip = [data.datasets[tooltipItem.datasetIndex].label + " : " + tooltipItem.yLabel];
 									return  newtooltip;
 								},
 								// remove title
@@ -436,51 +436,6 @@ $(document).ready(function() {
 			$(this).parent().append('<div class="downloadandshare"><a class="download-canvas" data-canvas_id="'+canvasid+'"></a><div class="shareBtn" data-user_id="'+userid+'" data-canvas_id="'+canvasid+'"></div></div>');
 		});
 	});
-
-	var canvasquesanalysis = document.getElementById("quesanalysis");
-	var canvashardestques = document.getElementById("hardestques");
-
-	canvasquesanalysis.onclick = function (qevt) {
-		var activePoints = quesanalysis.getElementsAtEvent(qevt);
-		var chartData = activePoints[0]['_chart'].config.data;
-		var idx = activePoints[0]['_index'];
-		var label = chartData.labels[idx];
-
-		if (allquestions !== undefined) {
-			$.each(allquestions, function(i, quesid) {
-				if (label == quesid.split(",")[0]) {
-					var quesid = quesid.split(",")[1];
-					var id = quizid;
-					var newwindow = window.open(rooturl+'/grade/report/quizanalytics/questions.php?quizid='+id+'&quesid='+quesid, '', 'height=500,width=800');
-					if (window.focus) {
-						newwindow.focus();
-					}
-					return false;
-				}
-			});
-		}
-	};
-
-	canvashardestques.onclick = function (aqevt) {
-		var activePoints = hardestques.getElementsAtEvent(aqevt);
-		var chartData = activePoints[0]['_chart'].config.data;
-		var idx = activePoints[0]['_index'];
-		var label = chartData.labels[idx];
-
-		if (allquestions !== undefined) {
-			$.each(allquestions, function(i, quesid) {
-				if (label == quesid.split(",")[0]) {
-					var quesid = quesid.split(",")[1];
-					var id = quizid;
-					var newwindow = window.open(rooturl+'/grade/report/quizanalytics/questions.php?quizid='+id+'&quesid='+quesid, '', 'height=500,width=800');
-					if (window.focus) {
-						newwindow.focus();
-					}
-					return false;
-				}
-			});
-		}
-	};
 
 	$('body').on('click', ".shareBtn", function(index) {
 		var useridsharecanvas = $(this).data('user_id');
