@@ -32,7 +32,7 @@ $userid   = optional_param('userid', $USER->id, PARAM_INT);
 
 $PAGE->set_url(new moodle_url($CFG->wwwroot.'/grade/report/quizanalytics/index.php', array('id' => $courseid)));
 $PAGE->requires->css('/grade/report/quizanalytics/css/styles.css', true);
-$PAGE->requires->css('/grade/report/quizanalytics/css/bootstrap.min.css', true);
+#$PAGE->requires->css('/grade/report/quizanalytics/css/bootstrap.min.css', true);
 $PAGE->requires->js('/grade/report/quizanalytics/js/jquery.min.js', true);
 if ($CFG->gradereport_quizanalytics_fbappid != 'Empty') {
 ?>

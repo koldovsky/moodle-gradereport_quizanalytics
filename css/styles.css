@@ -208,9 +208,9 @@
 #page-grade-report-quizanalytics-index .navbar-light .navbar-nav .nav-link {
   font-size: 1.2rem;
 }
-#page-grade-report-quizanalytics-index .navbar .popover-region {
+/* #page-grade-report-quizanalytics-index .navbar .popover-region {
   margin-top: 10px;
-}
+} */
 #page-grade-report-quizanalytics-index .popover-region-toggle::before,
 #page-grade-report-quizanalytics-index .popover-region-toggle::after {
   bottom: -10px;
